@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dbEntity.member.basicmappers.AppQuartzMapper" >
+  <resultMap id="BaseResultMap" type="com.dbEntity.member.basicentity.AppQuartz" >
+    <id column="quartzI_d" property="quartziD" jdbcType="INTEGER" />
+    <result column="job_Name" property="jobName" jdbcType="VARCHAR" />
+    <result column="job_Group" property="jobGroup" jdbcType="VARCHAR" />
+    <result column="start_Time" property="startTime" jdbcType="VARCHAR" />
+    <result column="cron_Expression" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="invoke_Param" property="invokeParam" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    quartzI_d, job_Name, job_Group, start_Time, cron_Expression, invoke_Param
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dbEntity.member.basicentity.AppQuartzExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_quartz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.dbEntity.member.basicentity.AppQuartzExample" >
+    delete from app_quartz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insertSelective" parameterType="com.dbEntity.member.basicentity.AppQuartz" >
+    insert into app_quartz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="quartziD != null" >
+        quartzI_d,
+      </if>
+      <if test="jobName != null" >
+        job_Name,
+      </if>
+      <if test="jobGroup != null" >
+        job_Group,
+      </if>
+      <if test="startTime != null" >
+        start_Time,
+      </if>
+      <if test="cronExpression != null" >
+        cron_Expression,
+      </if>
+      <if test="invokeParam != null" >
+        invoke_Param,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="quartziD != null" >
+        #{quartziD,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null" >
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeParam != null" >
+        #{invokeParam,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dbEntity.member.basicentity.AppQuartzExample" resultType="java.lang.Integer" >
+    select count(*) from app_quartz
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update app_quartz
+    <set >
+      <if test="record.quartziD != null" >
+        quartzI_d = #{record.quartziD,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobName != null" >
+        job_Name = #{record.jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobGroup != null" >
+        job_Group = #{record.jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        start_Time = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cronExpression != null" >
+        cron_Expression = #{record.cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invokeParam != null" >
+        invoke_Param = #{record.invokeParam,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update app_quartz
+    set quartzI_d = #{record.quartziD,jdbcType=INTEGER},
+      job_Name = #{record.jobName,jdbcType=VARCHAR},
+      job_Group = #{record.jobGroup,jdbcType=VARCHAR},
+      start_Time = #{record.startTime,jdbcType=VARCHAR},
+      cron_Expression = #{record.cronExpression,jdbcType=VARCHAR},
+      invoke_Param = #{record.invokeParam,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dbEntity.member.basicentity.AppQuartz" >
+    update app_quartz
+    <set >
+      <if test="jobName != null" >
+        job_Name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobGroup != null" >
+        job_Group = #{jobGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_Time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null" >
+        cron_Expression = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeParam != null" >
+        invoke_Param = #{invokeParam,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where quartzI_d = #{quartziD,jdbcType=INTEGER}
+  </update>
+</mapper>

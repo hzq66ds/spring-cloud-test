@@ -1,0 +1,21 @@
+server:
+  port: 8082
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/hzq66ds/SpringCloudConfig1
+          search-paths:
+            - foo  #git仓库下的路径
+            - bar  #git仓库下的路径
+          repos:
+            special:
+              pattern: aa*/de*,bb*/de*
+              uri: https://github.com/hzq66ds/SpringCloudConfig2
+  application:
+    name: configserver
+eureka:
+  client:
+    service-url:
+      defaultZone: http://6.6.6.112:8761/eureka/

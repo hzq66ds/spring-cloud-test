@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    config:
+#      uri: http://6.6.6.112:8080
+      profile: dev
+      label: master
+      discovery:
+        enabled: true
+        service-id: configserver
+  application:
+    name: foobar
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  security:
+    enabled: false

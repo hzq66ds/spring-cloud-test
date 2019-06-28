@@ -1,0 +1,24 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: zuul
+
+eureka:
+  client:
+   serviceUrl:
+    defaultZone: http://192.168.2.143:8762/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+zuul:
+#  ignored-services: '*'
+  routes:
+    abc:
+     path: /client01/**
+     serviceId: eurekaclient0
+    eurekaclient1: /client1/**
+
+management:
+  security:
+    enabled: false

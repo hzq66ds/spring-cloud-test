@@ -1,0 +1,22 @@
+server:
+  port: 8082
+#  context-path: /eurekaclient
+eureka:
+  client:
+   healrhcheck:
+    enable: true
+   serviceUrl:
+    defaultZone: http://192.168.2.143:8762/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+spring:
+  application:
+    name: eurekaclient1
+logging:
+  level:
+    com.example.demo.feigntest.FeignTest0: DEBUG
+
+management:
+  security:
+    enabled: false

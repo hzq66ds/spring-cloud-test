@@ -1,0 +1,7 @@
+encrypt:
+  key: foobar
+  key-store:
+    location: classpath:/server.jks
+    alias: mytestkey
+    password: letmein
+    secret: changeme

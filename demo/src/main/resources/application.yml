@@ -1,0 +1,28 @@
+server:
+  port: 8084
+#  context-path: /demo
+
+db:
+  oracle:
+    username: aaa1111
+    password: bbb1111
+
+name: oracle1111
+
+eureka:
+  client:
+   healrhcheck:
+    enable: true
+   serviceUrl:
+    defaultZone: http://192.168.2.143:8761/eureka/
+   region: us-east-1
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+spring:
+  application:
+    name: eurekaclient0
+#负载均衡配置
+eurekaclient1:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

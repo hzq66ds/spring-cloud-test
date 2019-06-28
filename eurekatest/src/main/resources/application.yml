@@ -1,0 +1,21 @@
+server:
+  port: 8761
+
+#eureka:
+#  client:
+#    service-url:
+#      defaulZone: http://192.168.2.143:8761/eureka/
+#    register-with-eureka: false
+#    fetch-registry: false
+
+spring:
+  application:
+    name: spring_eureka
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+  client:
+    service-url:
+      defaultZone: http://6.6.6.112:8762/eureka/

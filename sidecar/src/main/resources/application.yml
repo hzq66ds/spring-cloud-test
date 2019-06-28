@@ -1,0 +1,15 @@
+server:
+    port: 8071
+spring:
+  application:
+    name: sidecar-test
+eureka:
+  client:
+   serviceUrl:
+    defaultZone: http://192.168.2.143:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+sidecar:
+  port: 8070
+  health-uri: http://192.168.2.143:8070/health.json
