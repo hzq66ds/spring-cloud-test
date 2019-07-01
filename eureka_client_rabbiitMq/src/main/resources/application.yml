@@ -6,7 +6,7 @@ eureka:
     healrhcheck:
       enable: true
     serviceUrl:
-      defaultZone: http://127.0.0.1:8762/eureka/
+      defaultZone: http://hadoopslave4:8762/eureka/
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
