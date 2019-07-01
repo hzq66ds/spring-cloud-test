@@ -16,8 +16,8 @@ spring:
   rabbitmq:
     host: hadoopslave4
     port: 5672
-    username: admin
-    password: admin
+    username: guest
+    password: guest
     publisher-confirms: true
     virtual-host: /
 

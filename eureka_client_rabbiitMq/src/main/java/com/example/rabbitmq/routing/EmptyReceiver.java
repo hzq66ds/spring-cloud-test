@@ -7,18 +7,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmptyReceiver {
 
-    @RabbitListener(queues = "other")
+    @RabbitListener(queues = "vv")
     public void receiveother(String in) {
-        System.out.printf(" [other] Received '%s' %n",in);
+        System.out.printf(" [vv] Received '%s' %n",in);
     }
 
-    @RabbitListener(queues = "word1")
+    @RabbitListener(queues = "aa")
     public void receiveword1(String in) {
-        System.out.printf(" [word1] Received '%s'%n",in);
+        System.out.printf(" [aa] Received '%s'%n",in);
     }
 
-    @RabbitListener(queues = "hello1")
+    @RabbitListener(queues = "bb")
     public void receivehello1(String in) {
-        System.out.printf(" [hello1] Received '%s'%n",in);
+        System.out.printf(" [bb] Received '%s'%n",in);
     }
 }

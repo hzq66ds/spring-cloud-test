@@ -12,17 +12,17 @@ import org.springframework.context.annotation.Configuration;
 public class MQConfig03 {
     @Bean
     public Queue otherQueue() {
-        return new Queue("other");
+        return new Queue("vv");
     }
 
     @Bean
-    public Queue word1Queue() {
-        return new Queue("word1");
+    public Queue aaQueue() {
+        return new Queue("aa");
     }
 
     @Bean
-    public Queue hello1Queue() {
-        return new Queue("hello1");
+    public Queue bbQueue() {
+        return new Queue("bb");
     }
 
     @Bean
@@ -30,16 +30,16 @@ public class MQConfig03 {
         return new DirectExchange("tut.direct");
     }
     @Bean
-    public Binding binding1(@Qualifier("direct") DirectExchange direct, @Qualifier("word1Queue") Queue queue) {
-        return BindingBuilder.bind(queue).to(direct).with("word");
+    public Binding binding1(@Qualifier("direct") DirectExchange direct, @Qualifier("bbQueue") Queue queue) {
+        return BindingBuilder.bind(queue).to(direct).with("bb");
     }
     @Bean
-    public Binding binding2(@Qualifier("direct") DirectExchange direct,@Qualifier("hello1Queue") Queue queue) {
-        return BindingBuilder.bind(direct).to(direct).with("hello");
+    public Binding binding2(@Qualifier("direct") DirectExchange direct,@Qualifier("aaQueue") Queue queue) {
+        return BindingBuilder.bind(queue).to(direct).with("aa");
     }
 
     @Bean
     public Binding binding3(@Qualifier("direct") DirectExchange direct,@Qualifier("otherQueue") Queue queue) {
-        return BindingBuilder.bind(direct).to(direct).with("other");
+        return BindingBuilder.bind(queue).to(direct).with("vv");
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 public class DirectSender {
-    String[] flags = {"word","hello","other"};
+    String[] flags = {"aa","bb","vv"};
     @Autowired
     private RabbitTemplate template;
 
@@ -21,16 +21,11 @@ public class DirectSender {
     @Qualifier("direct")
     private DirectExchange directExchange;
 
-    @Autowired
-    @Qualifier("otherQueue")
-    private Queue queue;
-
     public void sendDirectExchange(String message,String flag) {
         if (!Arrays.asList(flags).contains(flag)){
-            flag="other";
+            flag=flags[flags.length-1];
         }
-//        this.template.convertAndSend(directExchange.getName(),flag, message);
-        this.template.convertAndSend(queue.getName(),message);
+        this.template.convertAndSend(directExchange.getName(),flag, message);
         System.out.printf("[directExchange_%s] Sent '%s'%n",flag,message);
     }
 }
