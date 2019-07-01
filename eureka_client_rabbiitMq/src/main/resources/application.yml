@@ -14,7 +14,7 @@ spring:
   application:
     name: eurekaclientRabbitMq
   rabbitmq:
-    host: 172.16.2.4
+    host: hadoopslave4
     port: 5672
     username: admin
     password: admin
