@@ -1,0 +1,7 @@
+FROM openjdk
+LABEL maintainer="hanzhiqiang <hanzhiqiang@lenztechretail.com>"
+VOLUME ["/tmp","/data"]
+ADD target/eurekaserver*.jar /app.jar
+RUN touch /app.jar
+EXPOSE 8762
+ENTRYPOINT ["java","-Dspring.profiles.active=host8762","-jar","/app.jar"]
