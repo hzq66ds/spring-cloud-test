@@ -23,16 +23,7 @@ import java.sql.ResultSet;
 public class EurekaClientTestQuartz {
 
 	public static void main(String[] args) {
-//		SpringApplication.run(EurekaClientTestQuartz.class, args);
-
-		EurekaClientTestQuartz quartz = new EurekaClientTestQuartz();
-		int[] arr1={9,6,7,8},arr2={5,6,7,8};
-
-		int[] arr3= quartz.sort(arr1,arr2);
-		System.out.println(arr3);
-
-		System.out.println(quartz.reverseString("abcdefg","ed","1111"));
-
+		SpringApplication.run(EurekaClientTestQuartz.class, args);
 	}
 
 
