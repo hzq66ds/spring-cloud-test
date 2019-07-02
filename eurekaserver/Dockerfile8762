@@ -1,4 +1,4 @@
-FROM openjdk
+FROM openjdk:8-jdk-alpine
 LABEL maintainer="hanzhiqiang <hanzhiqiang@lenztechretail.com>"
 VOLUME ["/tmp","/data"]
 ADD target/eurekaserver*.jar /app.jar
