@@ -1,6 +1,5 @@
 #!/bin.bash
-
-export springboot_image=springboot_image_eureka_client_rabbitMq
+export springboot_image=springboot_image_eureka_rabbitmq
 export imageid=`docker images|grep $springboot_image|grep latest|awk '{print $3}'`
 
 docker stop $springboot_image
