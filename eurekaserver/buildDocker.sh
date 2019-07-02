@@ -17,8 +17,8 @@ docker rmi $springboot_image_01:latest $springboot_image_02:latest
 docker build -t $springboot_image_01 -f $Dockerfile_01 .
 docker build -t $springboot_image_02 -f $Dockerfile_02 .
 
-docker run -d -p 8762:8762 $springboot_image_01
-docker run -d -p 8763:8763 $springboot_image_02
+docker run -d -p 8762:8762 --name $springboot_image_01 $springboot_image_01
+docker run -d -p 8763:8763 --name $springboot_image_02 $springboot_image_02
 
 
 
