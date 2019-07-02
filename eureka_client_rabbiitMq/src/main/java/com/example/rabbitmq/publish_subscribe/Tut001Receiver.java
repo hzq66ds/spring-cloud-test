@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 public class Tut001Receiver {
 
     @RabbitListener(queues = "word")
-    public void receive1(String in) {
+    public void pubreceive1(String in) {
         System.out.printf(" [word_X] Received '%s'%n",in);
     }
 
     @RabbitListener(queues = "word")
-    public void receive2(String in) {
+    public void pubreceive2(String in) {
         System.out.printf(" [word_Y] Received '%s'%n",in);
     }
 }

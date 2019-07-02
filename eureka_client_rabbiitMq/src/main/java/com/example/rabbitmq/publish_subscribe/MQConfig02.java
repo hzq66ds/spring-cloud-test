@@ -22,12 +22,12 @@ public class MQConfig02 {
     }
 
     @Bean
-    public Binding binding1(FanoutExchange fanout,@Qualifier("wordQueue") Queue queue) {
+    public Binding pubbinding1(FanoutExchange fanout,@Qualifier("wordQueue") Queue queue) {
         return BindingBuilder.bind(queue).to(fanout);
     }
 
     @Bean
-    public Binding binding2(FanoutExchange fanout,@Qualifier("helloQueue") Queue queue) {
+    public Binding pubbinding2(FanoutExchange fanout,@Qualifier("helloQueue") Queue queue) {
         return BindingBuilder.bind(queue).to(fanout);
     }
 

@@ -29,17 +29,18 @@ public class MQConfig03 {
     public DirectExchange direct(){
         return new DirectExchange("tut.direct");
     }
+
     @Bean
-    public Binding binding1(@Qualifier("direct") DirectExchange direct, @Qualifier("bbQueue") Queue queue) {
+    public Binding directbinding1(@Qualifier("direct") DirectExchange direct, @Qualifier("bbQueue") Queue queue) {
         return BindingBuilder.bind(queue).to(direct).with("bb");
     }
     @Bean
-    public Binding binding2(@Qualifier("direct") DirectExchange direct,@Qualifier("aaQueue") Queue queue) {
+    public Binding directbinding2(@Qualifier("direct") DirectExchange direct,@Qualifier("aaQueue") Queue queue) {
         return BindingBuilder.bind(queue).to(direct).with("aa");
     }
 
     @Bean
-    public Binding binding3(@Qualifier("direct") DirectExchange direct,@Qualifier("otherQueue") Queue queue) {
+    public Binding directbinding3(@Qualifier("direct") DirectExchange direct,@Qualifier("otherQueue") Queue queue) {
         return BindingBuilder.bind(queue).to(direct).with("vv");
     }
 }
