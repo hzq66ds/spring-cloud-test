@@ -1,4 +1,5 @@
 #!/bin.bash
+mvn clean compile package
 export Dockerfile_01=Dockerfile8762
 export Dockerfile_02=Dockerfile8763
 export springboot_image_01=springboot_image_8762

@@ -1,4 +1,5 @@
 #!/bin.bash
+mvn clean compile package
 export springboot_image=springboot_image_eureka_rabbitmq
 export imageid=`docker images|grep $springboot_image|grep latest|awk '{print $3}'`
 
