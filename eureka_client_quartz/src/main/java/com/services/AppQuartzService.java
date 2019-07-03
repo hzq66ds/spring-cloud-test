@@ -1,10 +1,12 @@
 package com.services;
 
 import com.dbEntity.member.basicentity.AppQuartz;
+import com.dbEntity.member.basicentity.AppQuartzExample;
 import com.dbEntity.member.basicmappers.AppQuartzMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +17,19 @@ import java.util.List;
 public class AppQuartzService {
     @Autowired
     private AppQuartzMapper appQuartzMapper;
+
+    public List<AppQuartz> getJobs(Integer id){
+        List<AppQuartz> result = new ArrayList<>();
+        if (id!=null&&id>0) {
+            AppQuartz quartz = appQuartzMapper.selectByPrimaryKey(id);
+            result.add(quartz);
+        }else {
+            AppQuartzExample example = new AppQuartzExample();
+            result.addAll(appQuartzMapper.selectByExample(example));
+
+        }
+        return result;
+    }
 
     public void insertAppQuartzSer(AppQuartz appQuartz){
         appQuartzMapper.insert(appQuartz);

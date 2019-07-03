@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class JobUtil {
     @Autowired
     @Qualifier("scheduler")
     private Scheduler scheduler;
-
 
     /**
      * 新建一个任务

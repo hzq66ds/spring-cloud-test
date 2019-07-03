@@ -5,10 +5,9 @@ import com.dbEntity.member.basicentity.AppQuartz;
 import com.services.AppQuartzService;
 import com.utils.JobUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class JobController {
@@ -17,14 +16,36 @@ public class JobController {
     @Autowired
     private AppQuartzService appQuartzService;
 
-    //添加一个job
+    /**
+     * 获取所有
+     * @param appQuartz
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value="/getJobs/{id}")
+    public ReturnMsg getJobs(@PathVariable("id")Integer id) throws Exception {
+        List<AppQuartz> list = appQuartzService.getJobs(id);
+        return new ReturnMsg<AppQuartz>("200","查询成功",list);
+    }
+
+    /**
+     * 添加一个job
+     * @param appQuartz
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/addJob",method=RequestMethod.POST)
     public ReturnMsg addjob(@RequestBody AppQuartz appQuartz) throws Exception {
         appQuartzService.insertAppQuartzSer(appQuartz);
         return new ReturnMsg("200",jobUtil.addJob(appQuartz));
     }
 
-    //暂停job
+    /**
+     * 暂停job
+     * @param quartzIds
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/pauseJob",method=RequestMethod.POST)
     public ReturnMsg pausejob(@RequestBody Integer[]quartzIds) throws Exception {
         AppQuartz appQuartz=null;
@@ -39,7 +60,12 @@ public class JobController {
         }
     }
 
-    //恢复job
+    /**
+     * 恢复job
+     * @param quartzIds
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/resumeJob",method= RequestMethod.POST)
     public ReturnMsg resumejob(@RequestBody Integer[]quartzIds) throws Exception {
         AppQuartz appQuartz=null;
@@ -55,7 +81,12 @@ public class JobController {
     }
 
 
-    //删除job
+    /**
+     * 删除job
+     * @param quartzIds
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/deletJob",method=RequestMethod.POST)
     public ReturnMsg deletjob(@RequestBody Integer[]quartzIds) throws Exception {
         AppQuartz appQuartz=null;
@@ -69,7 +100,12 @@ public class JobController {
         return new ReturnMsg("200","success deleteJob");
     }
 
-    //修改
+    /**
+     * 修改
+     * @param appQuartz
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/updateJob",method=RequestMethod.POST)
     public ReturnMsg  modifyJob(@RequestBody AppQuartz appQuartz) throws Exception {
         String ret= jobUtil.modifyJob(appQuartz);
@@ -81,14 +117,22 @@ public class JobController {
         }
     }
 
-    //暂停所有
+    /**
+     * 暂停所有
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/pauseAll",method=RequestMethod.GET)
     public ReturnMsg pauseAllJob() throws Exception {
         jobUtil.pauseAllJob();
         return new ReturnMsg("200","success pauseAll");
     }
 
-    //恢复所有
+    /**
+     * 恢复所有
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/repauseAll",method=RequestMethod.GET)
     public ReturnMsg repauseAllJob() throws Exception {
         jobUtil.resumeAllJob();
