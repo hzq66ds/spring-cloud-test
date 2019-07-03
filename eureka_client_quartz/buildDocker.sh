@@ -3,7 +3,7 @@ export springboot_image=springboot_image_eureka_client_quartz
 export imageid=`docker images|grep $springboot_image|grep latest|awk '{print $3}'`
 
 docker stop $springboot_image
-docker rm springboot_image
+docker rm $springboot_image
 
 echo "容器已停止，并移除start"
 docker ps -a|grep $springboot_image
