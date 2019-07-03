@@ -46,14 +46,12 @@ public class JobController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value="/pauseJob",method=RequestMethod.POST)
-    public ReturnMsg pausejob(@RequestBody Integer[]quartzIds) throws Exception {
+    @GetMapping(value="/pauseJob/{id}")
+    public ReturnMsg pausejob(@PathVariable("id")Integer id) throws Exception {
         AppQuartz appQuartz=null;
-        if(quartzIds.length>0){
-            for(Integer quartzId:quartzIds) {
-                appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
-                jobUtil.pauseJob(appQuartz.getJobName(), appQuartz.getJobGroup());
-            }
+        if(id!=null&&id>0){
+            appQuartz=appQuartzService.selectAppQuartzByIdSer(id);
+            jobUtil.pauseJob(appQuartz.getJobName(), appQuartz.getJobGroup());
             return new ReturnMsg("200","success pauseJob");
         }else {
             return new ReturnMsg("404","fail pauseJob");
@@ -66,14 +64,12 @@ public class JobController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value="/resumeJob",method= RequestMethod.POST)
-    public ReturnMsg resumejob(@RequestBody Integer[]quartzIds) throws Exception {
+    @GetMapping(value="/resumeJob/{id}")
+    public ReturnMsg resumejob(@PathVariable("id")Integer id) throws Exception {
         AppQuartz appQuartz=null;
-        if(quartzIds.length>0) {
-            for(Integer quartzId:quartzIds) {
-                appQuartz=appQuartzService.selectAppQuartzByIdSer(quartzId);
-                jobUtil.resumeJob(appQuartz.getJobName(), appQuartz.getJobGroup());
-            }
+        if(id!=null&&id>0) {
+            appQuartz=appQuartzService.selectAppQuartzByIdSer(id);
+            jobUtil.resumeJob(appQuartz.getJobName(), appQuartz.getJobGroup());
             return new ReturnMsg("200","success resumeJob");
         }else {
             return new ReturnMsg("404","fail resumeJob");
