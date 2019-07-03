@@ -21,7 +21,7 @@ docker build -t $springboot_image .
 docker images
 echo "重新创建镜像，并移除end"
 
-docker run -d -p 8182:8182 --name $springboot_image $springboot_image
+docker run -d -p 8182:8182 --add-host hadoopslave2:172.16.2.15 --add-host hadoopslave4:172.16.2.17 --name $springboot_image $springboot_image
 
 
 
