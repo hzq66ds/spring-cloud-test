@@ -30,7 +30,7 @@ public class ExcelUtil {
     public static void writeExcel(List<? extends BaseRowModel> list,
                                   String fileName, String sheetName, BaseRowModel model) throws Exception{
 
-        FileOutputStream outputStream = new FileOutputStream(new File(""));
+        FileOutputStream outputStream = new FileOutputStream(fileName);
         ExcelWriter writer = new ExcelWriter(outputStream, ExcelTypeEnum.XLSX);
         Sheet sheet = new Sheet(1, 0, model.getClass());
         sheet.setSheetName(sheetName);
