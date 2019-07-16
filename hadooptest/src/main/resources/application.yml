@@ -1,0 +1,6 @@
+server:
+    port: 8800
+
+spring:
+  hadoop:
+    fsUri: fs.defaultFS=hdfs://hadoopmaster:8020

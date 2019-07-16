@@ -35,6 +35,7 @@
 		<module>sidecar</module>
 		<module>eureka_client_quartz</module>
 		<module>eureka_client_rabbiitMq</module>
+		<module>hadooptest</module>
 	</modules>
 
 	<dependencyManagement>
