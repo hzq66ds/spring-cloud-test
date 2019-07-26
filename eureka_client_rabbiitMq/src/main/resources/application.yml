@@ -25,4 +25,7 @@ tutorial:
   client:
     duration: 1000
 
+rocketmq:
+  addr: hadoopslave4:9876
+
 
