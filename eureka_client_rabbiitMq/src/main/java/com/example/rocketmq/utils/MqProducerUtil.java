@@ -1,4 +1,4 @@
-package com.example.rocketmq;
+package com.example.rocketmq.utils;
 
 import org.apache.rocketmq.client.producer.*;
 import org.apache.rocketmq.common.message.Message;
@@ -6,8 +6,8 @@ import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
@@ -16,21 +16,32 @@ import java.util.List;
  * Created by hanzhiqiang@lenztechretail.com
  * on 2019/7/26.
  */
-@ConfigurationProperties(prefix = "rocketmq")
+@Component
+//@ConfigurationProperties(prefix = "rocketmq")
 public class MqProducerUtil {
-    @Value("${addr}")
+    @Value("${rocketmq.addr}")
     private String mq_addr="hadoopslave4:9876";
+
+    @Value("${rocketmq.group}")
+    private String group="group1";
+
+    @Value("${rocketmq.topic}")
+    private String topic="TopicA";
+
+    @Value("${rocketmq.tag}")
+    private String tag="tagA";
+
     /**
      * 同步发送消息
      */
-    public SendResult syncProducer(String groupName,String topic,String tag,String message){
+    public SendResult syncProducer(String message){
         try {
             //Instantiate with a producer group name.
-            DefaultMQProducer producer = new DefaultMQProducer(groupName);
+            DefaultMQProducer producer = new DefaultMQProducer(group);
             // Specify name server addresses.
             producer.setCreateTopicKey("AUTO_CREATE_TOPIC_KEY");
 //            producer.setVipChannelEnabled(false);
-            producer.setNamesrvAddr("hadoopslave4:9876");
+            producer.setNamesrvAddr(mq_addr);
             //消息发送失败重试次数
             producer.setRetryTimesWhenSendFailed(5);
             //Launch the instance.
@@ -55,10 +66,10 @@ public class MqProducerUtil {
     /**
      * 异步发送消息
      */
-    public void asyncProducer(String groupName,String topic,String tag,String message){
+    public void asyncProducer(String message){
         try {
             //Instantiate with a producer group name.
-            DefaultMQProducer producer = new DefaultMQProducer(groupName);
+            DefaultMQProducer producer = new DefaultMQProducer(group);
             // Specify name server addresses.
             producer.setNamesrvAddr(mq_addr);
             //Launch the instance.
@@ -87,10 +98,10 @@ public class MqProducerUtil {
     /**
      * 单向模式发送消息
      */
-    public void onewayProducer(String groupName,String topic,String tag,String message){
+    public void onewayProducer(String message){
         try {
             //Instantiate with a producer group name.
-            DefaultMQProducer producer = new DefaultMQProducer(groupName);
+            DefaultMQProducer producer = new DefaultMQProducer(group);
             // Specify name server addresses.
             producer.setNamesrvAddr(mq_addr);
             producer.setRetryTimesWhenSendAsyncFailed(5);
@@ -111,10 +122,10 @@ public class MqProducerUtil {
     /**
      * 发送/接收全局和分区排序的消息
      */
-    public void orderedProducer (String groupName,String topic,String tag,String message){
+    public void orderedProducer (String message){
         try {
             //Instantiate with a producer group name.
-            MQProducer producer = new DefaultMQProducer(groupName);
+            MQProducer producer = new DefaultMQProducer(group);
             //Launch the instance.
             producer.start();
             String[] tags = new String[] {"TagA", "TagB", "TagC", "TagD", "TagE"};
@@ -145,7 +156,6 @@ public class MqProducerUtil {
 
     public static void main(String[] args) {
         MqProducerUtil mqProducerUtil = new MqProducerUtil();
-        mqProducerUtil.syncProducer("group1","TopicTest","TagA","hello");
-        mqProducerUtil.onewayProducer("group2","TopicTest","TagB","hello");
+        mqProducerUtil.syncProducer("123");
     }
 }

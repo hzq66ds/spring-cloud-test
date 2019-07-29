@@ -27,5 +27,8 @@ tutorial:
 
 rocketmq:
   addr: hadoopslave4:9876
+  group: group1
+  topic: TopicA
+  tag: TagA
 
 

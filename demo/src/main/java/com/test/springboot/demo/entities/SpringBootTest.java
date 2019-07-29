@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by hanzhiqiang on 2018/1/1.
  */
-
-
 @Repository
 //@Scope(value = "singleton")
 @ConfigurationProperties(prefix = "db.oracle")

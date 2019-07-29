@@ -1,4 +1,4 @@
-package com.example.rocketmq;
+package com.example.rocketmq.utils;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.*;
@@ -7,7 +7,9 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -16,15 +18,26 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by hanzhiqiang@lenztechretail.com
  * on 2019/7/26.
  */
-@ConfigurationProperties(prefix = "rocketmq")
+@Component
+//@ConfigurationProperties(prefix = "rocketmq")
 public class MqConsumerUtil {
-    @Value("${addr}")
+    @Value("${rocketmq.addr}")
     private String mq_addr="hadoopslave4:9876";
 
-    public String consumerMessage(String groupName, String topic){
+    @Value("${rocketmq.group}")
+    private String group="group1";
+
+    @Value("${rocketmq.topic}")
+    private String topic="TopicTest";
+
+    @Value("${rocketmq.tag}")
+    private String tag="tagA";
+
+    @PostConstruct
+    public String consumerMessage(){
         try {
             // Instantiate with specified consumer group name.
-            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(groupName);
+            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(group);
             // Specify name server addresses.
             consumer.setNamesrvAddr(mq_addr);
             // Subscribe one more more topics to consume.
@@ -59,12 +72,12 @@ public class MqConsumerUtil {
      *  MessageModel.BROADCASTING  广播
      *
      */
-    public void orderedProducer(String groupName, String topic, String subExpression) {
+    public void orderedProducer() {
         try {
-            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(groupName);
+            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(group);
             consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
             consumer.setMessageModel(MessageModel.CLUSTERING);
-            consumer.subscribe(topic, subExpression);
+            consumer.subscribe(topic, "TagA || TagC || TagD");
             consumer.registerMessageListener(new MessageListenerOrderly() {
                 AtomicLong consumeTimes = new AtomicLong(0);
                 @Override
@@ -98,11 +111,7 @@ public class MqConsumerUtil {
 
     public static void main(String[] args) {
         MqConsumerUtil mqConsumerUtil = new MqConsumerUtil();
-        String[] topics = {"TopicTest"};
-        String[] tags = new String[] {"TagA", "TagB", "TagC", "TagD", "TagE"};
-        for (String topic:topics) {
-//            mqConsumerUtil.consumerMessage("group1",topic);
-            mqConsumerUtil.orderedProducer("group2",topic, "TagA || TagC || TagD");
-        }
+        mqConsumerUtil.consumerMessage();
     }
+
 }
