@@ -1,19 +1,23 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://hadoopslave4:8762/eureka/
 spring:
   cloud:
     config:
-#      uri: http://6.6.6.112:8080
+#      uri: http://localhost:8082 #直接指向configserver中心 或者使用service-id从注册中心中查找配置中心服务
       profile: dev
       label: master
       discovery:
-        enabled: true
-        service-id: configserver
-  application:
-    name: foobar
+        enabled: true #开启配置中心
+        service-id: configserver #找到配置中心实例
   rabbitmq:
-    host: localhost
+    host: hadoopslave4
     port: 5672
     username: guest
     password: guest
+    publisher-confirms: true
+    virtual-host: /
 
 management:
   security:

@@ -7,7 +7,9 @@ import com.netflix.zuul.context.RequestContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by hanzhiqiang on 2018/2/7.
+ *
+ * @author hanzhiqiang
+ * @date 2018/2/7
  */
 
 public class MyZuulFilter extends ZuulFilter

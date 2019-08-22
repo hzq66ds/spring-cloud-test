@@ -10,12 +10,13 @@ spring:
             - foo  #git仓库下的路径
             - bar  #git仓库下的路径
           repos:
-            special:
+            test1:
               pattern: aa*/de*,bb*/de*
               uri: https://github.com/hzq66ds/SpringCloudConfig2
   application:
     name: configserver
+    id: configserver
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://hadoopslave4:8762/eureka/
