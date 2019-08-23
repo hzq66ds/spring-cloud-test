@@ -1,6 +1,5 @@
 server:
     port: 8800
-
 spring:
-  hadoop:
-    fsUri: fs.defaultFS=hdfs://hadoopmaster:8020
+  application:
+    name: hadoop_springboot

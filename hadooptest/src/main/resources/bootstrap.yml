@@ -1,0 +1,13 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://hadoopslave4:8762/eureka/
+spring:
+  cloud:
+    config:
+#      uri: http://localhost:8082 #直接指向configserver中心 或者使用service-id从注册中心中查找配置中心服务
+      profile: prod
+      label: master
+      discovery:
+        enabled: true #开启配置中心
+        service-id: configserver #找到配置中心实例

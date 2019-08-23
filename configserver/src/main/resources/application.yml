@@ -9,6 +9,7 @@ spring:
           search-paths:
             - foo  #git仓库下的路径
             - bar  #git仓库下的路径
+            - hadoop #git仓库下的路径
           repos:
             test1:
               pattern: aa*/de*,bb*/de*
