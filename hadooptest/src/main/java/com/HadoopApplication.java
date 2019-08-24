@@ -23,9 +23,12 @@ public class HadoopApplication {
 	@Value("${profile}")
 	private String proFile;
 
+	@Value("${rateLimiterNum}")
+	private int rateLimiterNum;
+
 	@RequestMapping("/profile")
 	String printProFile(){
-		return proFile;
+		return proFile+"\t"+rateLimiterNum;
 	}
 
 	public static void main(String[] args) {
