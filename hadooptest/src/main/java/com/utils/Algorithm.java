@@ -1,5 +1,7 @@
 package com.utils;
 
+import javax.swing.*;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -9,6 +11,8 @@ import java.util.Random;
  * @author HZQ-PC
  */
 public class Algorithm {
+
+    private static Random random = new Random();
 
     /**
      * 冒泡排序
@@ -100,6 +104,72 @@ public class Algorithm {
 
 
     /**
+     * 归并排序
+     * @param array
+     * @return
+     */
+    public static int[] mergeSort(int[] array){
+        if (array == null || array.length == 0 || array.length < 2){
+            return array;
+        }
+        int midle = array.length>>1;
+        int[] left = Arrays.copyOfRange(array,0,midle);
+        int[] rigt = Arrays.copyOfRange(array,midle,array.length);
+        return merge(mergeSort(left),mergeSort(rigt));
+    }
+    private static int[] merge(int[] left,int[] rigt){
+        if (left == null || left.length == 0){
+            return rigt;
+        }
+        if (rigt == null || rigt.length == 0){
+            return left;
+        }
+        int[] result = new int[left.length + rigt.length];
+        for (int i = 0, lindex = 0, rindex = 0; i < result.length; i++) {
+            if (lindex>=left.length){
+                result[i] = rigt[rindex++];
+            }else if (rindex>=rigt.length){
+                result[i] = left[lindex++];
+            }else if(rigt[rindex] > left[lindex]){
+                result[i] = left[lindex++];
+            }else{
+                result[i] = rigt[rindex++];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 快速排序
+     * @param array
+     * @return
+     */
+    public static int[] quickSort(int[] array,int statindex,int endindex){
+        if (array == null || array.length == 0 || array.length == 1 || statindex == endindex || statindex == endindex -1){
+            return array;
+        }
+        int midleindex = statindex;
+        //将statindex到endindex的数据进行快速排序
+        for (int i = midleindex; i < endindex; i++) {
+            //默认取最后一个数为基数，将比基数大的数排在最前边
+            if (array[i] < array[endindex-1]){
+                swapNums(array, midleindex, i);
+                midleindex++;
+            }
+        }
+        //将比基数大的数排在最前边后，再将基数排在中间，基数的位置已经确定，不参与后续的排序
+        swapNums(array, midleindex, endindex-1);
+        if (endindex - statindex > 1) {
+            //基数位置已经确定，不参与后续的排序
+            quickSort(array, statindex, midleindex);
+            quickSort(array, midleindex + 1, endindex);
+        }
+        return array;
+    }
+
+
+
+    /**
      * 交换数据
      * @param nums
      * @param index1
@@ -124,18 +194,22 @@ public class Algorithm {
         System.out.println();
     }
 
-
+    public static int getRandomNum(int maxnum){
+        return random.nextInt(maxnum);
+    }
 
     public static void main(String[] args) {
-        Random random = new Random();
+
         int[] nums = new int[20];
         for (int i = 0; i < nums.length; i++) {
-            nums[i] = random.nextInt(100);
+            nums[i] = getRandomNum(100);
         }
         printList(nums);
 //        printList(bubbleSort(nums));
 //        printList(selectionSort(nums));
 //        printList(insertionSort(nums));
-        printList(shellSort(nums));
+//        printList(shellSort(nums));
+//        printList(mergeSort(nums));
+        printList(quickSort(nums,0,nums.length));
     }
 }
