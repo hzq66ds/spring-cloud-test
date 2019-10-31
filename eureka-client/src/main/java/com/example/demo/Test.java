@@ -1,16 +1,22 @@
 package com.example.demo;
 
+import ch.qos.logback.core.util.TimeUtil;
+import com.sun.org.apache.xpath.internal.objects.XBoolean;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,14 +28,19 @@ public class Test {
 
     public static void main(String[] args) {
         //函数式编程
-        test001(1,2, (a,b)->{
-            log.debug("处理结果："+(a+b));
-        });
-        test002(1,2, (a,b)->{
-            return a+b;
-        });
-        test003();
-        test004();
+//        test001(1,2, (a,b)->{
+//            log.debug("处理结果："+(a+b));
+//        });
+//        test002(1,2, (a,b)->{
+//            return a+b;
+//        });
+//        test003();
+//        test004();
+        test005();
+//        test006();
+
+        BooleanSupplier booleanSupplier = ()->{return true;};
+
     }
 
     public static Test getTest(Supplier<Test> supplier) {
@@ -61,5 +72,89 @@ public class Test {
         List<String> strings = Arrays.asList("abc", "", "bc", "efg", "abcd","", "jkl");
         List<String> filtered = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.toList());
         filtered.forEach(System.out::println);
+    }
+    public static void test005(){
+
+        Semaphore semaphore = new Semaphore(2);
+//        if (semaphore.tryAcquire()){
+//            semaphore.release();
+//        }
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1, 1, TimeUnit.DAYS,
+                new ArrayBlockingQueue<>(2),
+                new MyThreadFactory("test"),
+//                new ThreadPoolExecutor.CallerRunsPolicy()
+                new RejectedExecutionHandler() {
+                    @Override
+                    public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+                        System.out.println(Thread.currentThread().getName()+"_________饱和策略执行"+"_________"+r);
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        executor.submit(r);
+                    }
+                }
+        );
+        for (int i = 0; i < 10; i++) {
+            final int ii = i;
+            threadPoolExecutor.submit(()->{
+                System.out.println(Thread.currentThread().getName()+"线程"+ii);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        threadPoolExecutor.shutdown();
+    }
+    public static AtomicInteger down= new AtomicInteger(-1);
+    public static void test006(){
+        List<String> threadName = new ArrayList<>(4);
+
+        threadName.add("1");
+        threadName.add("2");
+        threadName.add("3");
+        threadName.add("4");
+//        threadName.stream().forEach(name->{
+//            down.set(1);
+//            while (down.getAndAdd(1)<10){
+//                try {
+//                    System.out.println(Thread.currentThread().getName()+"_______"+name+"_______"+ DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
+//                    Thread.sleep(1000);
+//                }catch (Exception e){}
+//            }
+//        });
+        threadName.parallelStream().forEach(name->{
+            while (down.getAndAdd(1)<40){
+                try {
+                    System.out.println(Thread.currentThread().getName()+"_______"+name+"_______"+ DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
+                    Thread.sleep(1000);
+                }catch (Exception e){}
+            }
+        });
+
+
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1);
+//        for (int i = 0; i < threadName.size(); i++) {
+//            final String name = threadName.get(i);
+//
+//        }
+
+
+    }
+}
+class MyThreadFactory implements ThreadFactory{
+    private String name;
+    public MyThreadFactory(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        System.out.println("线程"+r.toString());
+        return new Thread( r, name);
     }
 }
