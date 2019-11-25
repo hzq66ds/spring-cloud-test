@@ -50,6 +50,34 @@
 			<artifactId>easyexcel</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.btrace/btrace-maven -->
+		<dependency>
+			<groupId>io.btrace</groupId>
+			<artifactId>btrace-maven</artifactId>
+			<version>1.3.10</version>
+			<type>pom</type>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.btrace/btrace-maven-plugin -->
+		<dependency>
+			<groupId>io.btrace</groupId>
+			<artifactId>btrace-maven-plugin</artifactId>
+			<version>1.3.10</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.btrace/btrace-project-archetype -->
+		<dependency>
+			<groupId>io.btrace</groupId>
+			<artifactId>btrace-project-archetype</artifactId>
+			<version>1.3.10</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.tools.btrace/btrace-client -->
+		<!-- https://mvnrepository.com/artifact/com.sun.tools.btrace/btrace-client -->
+		<dependency>
+			<groupId>com.sun.tools.btrace</groupId>
+			<artifactId>btrace-client</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
