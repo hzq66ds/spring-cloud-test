@@ -198,18 +198,18 @@ public class Algorithm {
         return random.nextInt(maxnum);
     }
 
-    public static void main(String[] args) {
-
-        int[] nums = new int[20];
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = getRandomNum(100);
-        }
-        printList(nums);
-//        printList(bubbleSort(nums));
-//        printList(selectionSort(nums));
-//        printList(insertionSort(nums));
-//        printList(shellSort(nums));
-//        printList(mergeSort(nums));
-        printList(quickSort(nums,0,nums.length));
-    }
+//    public static void main(String[] args) {
+//
+//        int[] nums = new int[20];
+//        for (int i = 0; i < nums.length; i++) {
+//            nums[i] = getRandomNum(100);
+//        }
+//        printList(nums);
+////        printList(bubbleSort(nums));
+////        printList(selectionSort(nums));
+////        printList(insertionSort(nums));
+////        printList(shellSort(nums));
+////        printList(mergeSort(nums));
+//        printList(quickSort(nums,0,nums.length));
+//    }
 }

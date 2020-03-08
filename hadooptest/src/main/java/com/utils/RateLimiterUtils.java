@@ -18,8 +18,7 @@ import javax.validation.Valid;
 @Component
 public class RateLimiterUtils {
     Log log = LogFactory.getLog(RateLimiterUtils.class);
-    @Value("${rateLimiterNum}")
-    private int rateLimiterNum;
+    private int rateLimiterNum = 2;
     private RateLimiter rateLimiter;
     public RateLimiterUtils() {
         this.rateLimiter = RateLimiter.create(rateLimiterNum);

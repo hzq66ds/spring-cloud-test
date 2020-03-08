@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.annotations.MyLogs;
 import com.utils.RateLimiterUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,10 +20,15 @@ public class Test001 {
     private RateLimiterUtils rateLimiterUtils;
 
     @GetMapping("/getmsg")
+    @MyLogs(ignore = true,value = "getmsg测试")
     public String get(){
         rateLimiterUtils.getRateLimiter().acquire(1);
-        log.info("log111111");
         return "msg";
     }
-
+    @GetMapping("/getmsg1")
+    @MyLogs(ignore = true,value = "getmsg1_test")
+    public String get1(String msg){
+        rateLimiterUtils.getRateLimiter().acquire(1);
+        return "msg1";
+    }
 }
