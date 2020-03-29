@@ -1,0 +1,28 @@
+server:
+  port: 9201
+#  context-path: /demo
+
+eureka:
+  client:
+   healrhcheck:
+    enable: true
+   serviceUrl:
+    defaultZone: http://192.168.1.20:8762/eureka/
+   region: us-east-1
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+spring:
+  application:
+    name: elasticsearch_test_001
+#负载均衡配置
+eurekaclient1:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+elasticsearch:
+  host: 192.168.1.20
+  port: 9300
+  scheme: elasticsearch
+  timeout: 5000
+
