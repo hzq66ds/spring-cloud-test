@@ -1,5 +1,6 @@
 package com.test.springboot.demo.restcontroller;
 
+import com.netflix.discovery.converters.wrappers.CodecWrappers;
 import com.test.springboot.demo.dto.Person;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchException;
@@ -7,6 +8,7 @@ import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -17,6 +19,8 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -24,6 +28,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.StringUtils;
@@ -33,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -82,79 +88,6 @@ public class ElasticsearchController {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        RestHighLevelClient client = new RestHighLevelClient(
-                RestClient.builder(
-                        new HttpHost("192.168.1.20", 9200, "http")
-                )
-        );
-
-//        IndexRequest request = new IndexRequest("posts");
-//        request.id("1");
-//        String jsonString = "{" +
-//                "\"user\":\"kimchy\"," +
-//                "\"postDate\":\"2013-01-30\"," +
-//                "\"message\":\"trying out Elasticsearch\"" +
-//                "}";
-//        request.source(jsonString, XContentType.JSON);
-
-
-
-//        Map<String, Object> jsonMap = new HashMap<>();
-//        jsonMap.put("user", "kimchy");
-//        jsonMap.put("postDate", new Date());
-//        jsonMap.put("message", "trying out Elasticsearch");
-//        IndexRequest indexRequest = new IndexRequest("posts").id("1").source(jsonMap);
-
-
-        XContentBuilder builder = XContentFactory.jsonBuilder();
-        builder.startObject();
-        {
-            builder.field("user", "kimchy");
-            builder.timeField("postDate", new Date());
-            builder.field("message", "trying out Elasticsearch");
-        }
-        builder.endObject();
-
-        IndexRequest indexRequest = new IndexRequest("posts").id("1").source(builder);
-
-        indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.WAIT_UNTIL);
-
-        //同步
-//        IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
-        //异步
-        client.indexAsync(indexRequest,RequestOptions.DEFAULT,new ActionListener<IndexResponse>() {
-            @Override
-            public void onResponse(IndexResponse indexResponse) {
-                System.out.println(indexResponse.getIndex());
-                System.out.println(indexResponse.getId());
-
-                if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
-                    System.out.println("DocWriteResponse.Result.CREATED");
-                } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
-                    System.out.println("DocWriteResponse.Result.UPDATED");
-                }
-
-                ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
-                if (shardInfo.getTotal() != shardInfo.getSuccessful()) {
-                    System.out.printf("shardInfo.getTotal() != shardInfo.getSuccessful()");
-                }
-                if (shardInfo.getFailed() > 0) {
-                    for (ReplicationResponse.ShardInfo.Failure failure : shardInfo.getFailures()) {
-                        String reason = failure.reason();
-                        System.out.printf("getFailed : %s",reason);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                e.printStackTrace();
-            }
-        });
-        client.close();
-    }
 
 
     /**
