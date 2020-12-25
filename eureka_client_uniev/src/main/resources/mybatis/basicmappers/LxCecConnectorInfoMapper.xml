@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dbEntity.member.basicmappers.LxCecConnectorInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dbEntity.member.basicentity.LxCecConnectorInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" jdbcType="VARCHAR" />
+    <result column="equipment_id" property="equipmentId" jdbcType="VARCHAR" />
+    <result column="connector_id" property="connectorId" jdbcType="VARCHAR" />
+    <result column="connector_name" property="connectorName" jdbcType="VARCHAR" />
+    <result column="connector_type" property="connectorType" jdbcType="INTEGER" />
+    <result column="voltage_upper_limit" property="voltageUpperLimit" jdbcType="INTEGER" />
+    <result column="voltage_lower_limit" property="voltageLowerLimit" jdbcType="INTEGER" />
+    <result column="current" property="current" jdbcType="INTEGER" />
+    <result column="power" property="power" jdbcType="DECIMAL" />
+    <result column="park_no" property="parkNo" jdbcType="VARCHAR" />
+    <result column="national_standard" property="nationalStandard" jdbcType="INTEGER" />
+    <result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
+    <result column="aux_power" property="auxPower" jdbcType="INTEGER" />
+    <result column="start_type" property="startType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="proxy_operator_id" property="proxyOperatorId" jdbcType="VARCHAR" />
+    <result column="artificial_state" property="artificialState" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, operator_id, station_id, equipment_id, connector_id, connector_name, connector_type, 
+    voltage_upper_limit, voltage_lower_limit, current, power, park_no, national_standard, 
+    qr_code, aux_power, start_type, create_time, update_time, proxy_operator_id, artificial_state, 
+    state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dbEntity.member.basicentity.LxCecConnectorInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lx_cec_connector_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.dbEntity.member.basicentity.LxCecConnectorInfoExample" >
+    delete from lx_cec_connector_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insertSelective" parameterType="com.dbEntity.member.basicentity.LxCecConnectorInfo" >
+    insert into lx_cec_connector_info1
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="equipmentId != null" >
+        equipment_id,
+      </if>
+      <if test="connectorId != null" >
+        connector_id,
+      </if>
+      <if test="connectorName != null" >
+        connector_name,
+      </if>
+      <if test="connectorType != null" >
+        connector_type,
+      </if>
+      <if test="voltageUpperLimit != null" >
+        voltage_upper_limit,
+      </if>
+      <if test="voltageLowerLimit != null" >
+        voltage_lower_limit,
+      </if>
+      <if test="current != null" >
+        current,
+      </if>
+      <if test="power != null" >
+        power,
+      </if>
+      <if test="parkNo != null" >
+        park_no,
+      </if>
+      <if test="nationalStandard != null" >
+        national_standard,
+      </if>
+      <if test="qrCode != null" >
+        qr_code,
+      </if>
+      <if test="auxPower != null" >
+        aux_power,
+      </if>
+      <if test="startType != null" >
+        start_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="proxyOperatorId != null" >
+        proxy_operator_id,
+      </if>
+      <if test="artificialState != null" >
+        artificial_state,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentId != null" >
+        #{equipmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="connectorId != null" >
+        #{connectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="connectorName != null" >
+        #{connectorName,jdbcType=VARCHAR},
+      </if>
+      <if test="connectorType != null" >
+        #{connectorType,jdbcType=INTEGER},
+      </if>
+      <if test="voltageUpperLimit != null" >
+        #{voltageUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="voltageLowerLimit != null" >
+        #{voltageLowerLimit,jdbcType=INTEGER},
+      </if>
+      <if test="current != null" >
+        #{current,jdbcType=INTEGER},
+      </if>
+      <if test="power != null" >
+        #{power,jdbcType=DECIMAL},
+      </if>
+      <if test="parkNo != null" >
+        #{parkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalStandard != null" >
+        #{nationalStandard,jdbcType=INTEGER},
+      </if>
+      <if test="qrCode != null" >
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auxPower != null" >
+        #{auxPower,jdbcType=INTEGER},
+      </if>
+      <if test="startType != null" >
+        #{startType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proxyOperatorId != null" >
+        #{proxyOperatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="artificialState != null" >
+        #{artificialState,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dbEntity.member.basicentity.LxCecConnectorInfoExample" resultType="java.lang.Integer" >
+    select count(*) from lx_cec_connector_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lx_cec_connector_info1
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.operatorId != null" >
+        operator_id = #{record.operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationId != null" >
+        station_id = #{record.stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentId != null" >
+        equipment_id = #{record.equipmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connectorId != null" >
+        connector_id = #{record.connectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connectorName != null" >
+        connector_name = #{record.connectorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connectorType != null" >
+        connector_type = #{record.connectorType,jdbcType=INTEGER},
+      </if>
+      <if test="record.voltageUpperLimit != null" >
+        voltage_upper_limit = #{record.voltageUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.voltageLowerLimit != null" >
+        voltage_lower_limit = #{record.voltageLowerLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.current != null" >
+        current = #{record.current,jdbcType=INTEGER},
+      </if>
+      <if test="record.power != null" >
+        power = #{record.power,jdbcType=DECIMAL},
+      </if>
+      <if test="record.parkNo != null" >
+        park_no = #{record.parkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationalStandard != null" >
+        national_standard = #{record.nationalStandard,jdbcType=INTEGER},
+      </if>
+      <if test="record.qrCode != null" >
+        qr_code = #{record.qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auxPower != null" >
+        aux_power = #{record.auxPower,jdbcType=INTEGER},
+      </if>
+      <if test="record.startType != null" >
+        start_type = #{record.startType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.proxyOperatorId != null" >
+        proxy_operator_id = #{record.proxyOperatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artificialState != null" >
+        artificial_state = #{record.artificialState,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lx_cec_connector_info1
+    set id = #{record.id,jdbcType=BIGINT},
+      operator_id = #{record.operatorId,jdbcType=VARCHAR},
+      station_id = #{record.stationId,jdbcType=VARCHAR},
+      equipment_id = #{record.equipmentId,jdbcType=VARCHAR},
+      connector_id = #{record.connectorId,jdbcType=VARCHAR},
+      connector_name = #{record.connectorName,jdbcType=VARCHAR},
+      connector_type = #{record.connectorType,jdbcType=INTEGER},
+      voltage_upper_limit = #{record.voltageUpperLimit,jdbcType=INTEGER},
+      voltage_lower_limit = #{record.voltageLowerLimit,jdbcType=INTEGER},
+      current = #{record.current,jdbcType=INTEGER},
+      power = #{record.power,jdbcType=DECIMAL},
+      park_no = #{record.parkNo,jdbcType=VARCHAR},
+      national_standard = #{record.nationalStandard,jdbcType=INTEGER},
+      qr_code = #{record.qrCode,jdbcType=VARCHAR},
+      aux_power = #{record.auxPower,jdbcType=INTEGER},
+      start_type = #{record.startType,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      proxy_operator_id = #{record.proxyOperatorId,jdbcType=VARCHAR},
+      artificial_state = #{record.artificialState,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dbEntity.member.basicentity.LxCecConnectorInfo" >
+    update lx_cec_connector_info1
+    <set >
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentId != null" >
+        equipment_id = #{equipmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="connectorId != null" >
+        connector_id = #{connectorId,jdbcType=VARCHAR},
+      </if>
+      <if test="connectorName != null" >
+        connector_name = #{connectorName,jdbcType=VARCHAR},
+      </if>
+      <if test="connectorType != null" >
+        connector_type = #{connectorType,jdbcType=INTEGER},
+      </if>
+      <if test="voltageUpperLimit != null" >
+        voltage_upper_limit = #{voltageUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="voltageLowerLimit != null" >
+        voltage_lower_limit = #{voltageLowerLimit,jdbcType=INTEGER},
+      </if>
+      <if test="current != null" >
+        current = #{current,jdbcType=INTEGER},
+      </if>
+      <if test="power != null" >
+        power = #{power,jdbcType=DECIMAL},
+      </if>
+      <if test="parkNo != null" >
+        park_no = #{parkNo,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalStandard != null" >
+        national_standard = #{nationalStandard,jdbcType=INTEGER},
+      </if>
+      <if test="qrCode != null" >
+        qr_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auxPower != null" >
+        aux_power = #{auxPower,jdbcType=INTEGER},
+      </if>
+      <if test="startType != null" >
+        start_type = #{startType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proxyOperatorId != null" >
+        proxy_operator_id = #{proxyOperatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="artificialState != null" >
+        artificial_state = #{artificialState,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

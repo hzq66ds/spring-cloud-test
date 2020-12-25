@@ -37,6 +37,7 @@
 		<module>eureka_client_rabbiitMq</module>
 		<module>hadooptest</module>
 		<module>elasticsearch_test</module>
+		<module>eureka_client_uniev</module>
 	</modules>
 
 	<dependencyManagement>

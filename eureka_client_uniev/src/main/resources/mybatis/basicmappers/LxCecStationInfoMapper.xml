@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dbEntity.member.basicmappers.LxCecStationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dbEntity.member.basicentity.LxCecStationInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" jdbcType="VARCHAR" />
+    <result column="equipment_owner_id" property="equipmentOwnerId" jdbcType="VARCHAR" />
+    <result column="station_name" property="stationName" jdbcType="VARCHAR" />
+    <result column="station_custom_name" property="stationCustomName" jdbcType="VARCHAR" />
+    <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="station_tel" property="stationTel" jdbcType="VARCHAR" />
+    <result column="service_tel" property="serviceTel" jdbcType="VARCHAR" />
+    <result column="station_type" property="stationType" jdbcType="INTEGER" />
+    <result column="station_custom_type" property="stationCustomType" jdbcType="INTEGER" />
+    <result column="station_status" property="stationStatus" jdbcType="INTEGER" />
+    <result column="park_nums" property="parkNums" jdbcType="INTEGER" />
+    <result column="station_lng" property="stationLng" jdbcType="DECIMAL" />
+    <result column="station_lat" property="stationLat" jdbcType="DECIMAL" />
+    <result column="site_guide" property="siteGuide" jdbcType="VARCHAR" />
+    <result column="construction" property="construction" jdbcType="INTEGER" />
+    <result column="match_cars" property="matchCars" jdbcType="VARCHAR" />
+    <result column="park_info" property="parkInfo" jdbcType="VARCHAR" />
+    <result column="business_hours" property="businessHours" jdbcType="VARCHAR" />
+    <result column="electricity_fee" property="electricityFee" jdbcType="VARCHAR" />
+    <result column="service_fee" property="serviceFee" jdbcType="VARCHAR" />
+    <result column="original_electricity_fee" property="originalElectricityFee" jdbcType="VARCHAR" />
+    <result column="original_service_fee" property="originalServiceFee" jdbcType="VARCHAR" />
+    <result column="business_electricity_fee" property="businessElectricityFee" jdbcType="VARCHAR" />
+    <result column="business_service_fee" property="businessServiceFee" jdbcType="VARCHAR" />
+    <result column="park_fee" property="parkFee" jdbcType="VARCHAR" />
+    <result column="business_hours_format" property="businessHoursFormat" jdbcType="VARCHAR" />
+    <result column="business_hours_724" property="businessHours724" jdbcType="INTEGER" />
+    <result column="electricity_tax" property="electricityTax" jdbcType="DECIMAL" />
+    <result column="service_tax" property="serviceTax" jdbcType="DECIMAL" />
+    <result column="park_Fee_free" property="parkFeeFree" jdbcType="INTEGER" />
+    <result column="parking_discount_type" property="parkingDiscountType" jdbcType="INTEGER" />
+    <result column="park_fee_status" property="parkFeeStatus" jdbcType="INTEGER" />
+    <result column="printer_flag" property="printerFlag" jdbcType="INTEGER" />
+    <result column="barrier_flag" property="barrierFlag" jdbcType="INTEGER" />
+    <result column="payment" property="payment" jdbcType="VARCHAR" />
+    <result column="support_order" property="supportOrder" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="proxy_operator_id" property="proxyOperatorId" jdbcType="VARCHAR" />
+    <result column="artificial_state" property="artificialState" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="capability_tag" property="capabilityTag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, operator_id, station_id, equipment_owner_id, station_name, station_custom_name, 
+    country_code, area_code, address, station_tel, service_tel, station_type, station_custom_type, 
+    station_status, park_nums, station_lng, station_lat, site_guide, construction, match_cars, 
+    park_info, business_hours, electricity_fee, service_fee, original_electricity_fee, 
+    original_service_fee, business_electricity_fee, business_service_fee, park_fee, business_hours_format, 
+    business_hours_724, electricity_tax, service_tax, park_Fee_free, parking_discount_type, 
+    park_fee_status, printer_flag, barrier_flag, payment, support_order, remark, create_time, 
+    update_time, proxy_operator_id, artificial_state, state, capability_tag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.dbEntity.member.basicentity.LxCecStationInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lx_cec_station_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.dbEntity.member.basicentity.LxCecStationInfoExample" >
+    delete from lx_cec_station_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insertSelective" parameterType="com.dbEntity.member.basicentity.LxCecStationInfo" >
+    insert into lx_cec_station_info1
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="equipmentOwnerId != null" >
+        equipment_owner_id,
+      </if>
+      <if test="stationName != null" >
+        station_name,
+      </if>
+      <if test="stationCustomName != null" >
+        station_custom_name,
+      </if>
+      <if test="countryCode != null" >
+        country_code,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="stationTel != null" >
+        station_tel,
+      </if>
+      <if test="serviceTel != null" >
+        service_tel,
+      </if>
+      <if test="stationType != null" >
+        station_type,
+      </if>
+      <if test="stationCustomType != null" >
+        station_custom_type,
+      </if>
+      <if test="stationStatus != null" >
+        station_status,
+      </if>
+      <if test="parkNums != null" >
+        park_nums,
+      </if>
+      <if test="stationLng != null" >
+        station_lng,
+      </if>
+      <if test="stationLat != null" >
+        station_lat,
+      </if>
+      <if test="siteGuide != null" >
+        site_guide,
+      </if>
+      <if test="construction != null" >
+        construction,
+      </if>
+      <if test="matchCars != null" >
+        match_cars,
+      </if>
+      <if test="parkInfo != null" >
+        park_info,
+      </if>
+      <if test="businessHours != null" >
+        business_hours,
+      </if>
+      <if test="electricityFee != null" >
+        electricity_fee,
+      </if>
+      <if test="serviceFee != null" >
+        service_fee,
+      </if>
+      <if test="originalElectricityFee != null" >
+        original_electricity_fee,
+      </if>
+      <if test="originalServiceFee != null" >
+        original_service_fee,
+      </if>
+      <if test="businessElectricityFee != null" >
+        business_electricity_fee,
+      </if>
+      <if test="businessServiceFee != null" >
+        business_service_fee,
+      </if>
+      <if test="parkFee != null" >
+        park_fee,
+      </if>
+      <if test="businessHoursFormat != null" >
+        business_hours_format,
+      </if>
+      <if test="businessHours724 != null" >
+        business_hours_724,
+      </if>
+      <if test="electricityTax != null" >
+        electricity_tax,
+      </if>
+      <if test="serviceTax != null" >
+        service_tax,
+      </if>
+      <if test="parkFeeFree != null" >
+        park_Fee_free,
+      </if>
+      <if test="parkingDiscountType != null" >
+        parking_discount_type,
+      </if>
+      <if test="parkFeeStatus != null" >
+        park_fee_status,
+      </if>
+      <if test="printerFlag != null" >
+        printer_flag,
+      </if>
+      <if test="barrierFlag != null" >
+        barrier_flag,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="supportOrder != null" >
+        support_order,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="proxyOperatorId != null" >
+        proxy_operator_id,
+      </if>
+      <if test="artificialState != null" >
+        artificial_state,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="capabilityTag != null" >
+        capability_tag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentOwnerId != null" >
+        #{equipmentOwnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationCustomName != null" >
+        #{stationCustomName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null" >
+        #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="stationTel != null" >
+        #{stationTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTel != null" >
+        #{serviceTel,jdbcType=VARCHAR},
+      </if>
+      <if test="stationType != null" >
+        #{stationType,jdbcType=INTEGER},
+      </if>
+      <if test="stationCustomType != null" >
+        #{stationCustomType,jdbcType=INTEGER},
+      </if>
+      <if test="stationStatus != null" >
+        #{stationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="parkNums != null" >
+        #{parkNums,jdbcType=INTEGER},
+      </if>
+      <if test="stationLng != null" >
+        #{stationLng,jdbcType=DECIMAL},
+      </if>
+      <if test="stationLat != null" >
+        #{stationLat,jdbcType=DECIMAL},
+      </if>
+      <if test="siteGuide != null" >
+        #{siteGuide,jdbcType=VARCHAR},
+      </if>
+      <if test="construction != null" >
+        #{construction,jdbcType=INTEGER},
+      </if>
+      <if test="matchCars != null" >
+        #{matchCars,jdbcType=VARCHAR},
+      </if>
+      <if test="parkInfo != null" >
+        #{parkInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessHours != null" >
+        #{businessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="electricityFee != null" >
+        #{electricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFee != null" >
+        #{serviceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="originalElectricityFee != null" >
+        #{originalElectricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="originalServiceFee != null" >
+        #{originalServiceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="businessElectricityFee != null" >
+        #{businessElectricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="businessServiceFee != null" >
+        #{businessServiceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="parkFee != null" >
+        #{parkFee,jdbcType=VARCHAR},
+      </if>
+      <if test="businessHoursFormat != null" >
+        #{businessHoursFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="businessHours724 != null" >
+        #{businessHours724,jdbcType=INTEGER},
+      </if>
+      <if test="electricityTax != null" >
+        #{electricityTax,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceTax != null" >
+        #{serviceTax,jdbcType=DECIMAL},
+      </if>
+      <if test="parkFeeFree != null" >
+        #{parkFeeFree,jdbcType=INTEGER},
+      </if>
+      <if test="parkingDiscountType != null" >
+        #{parkingDiscountType,jdbcType=INTEGER},
+      </if>
+      <if test="parkFeeStatus != null" >
+        #{parkFeeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="printerFlag != null" >
+        #{printerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="barrierFlag != null" >
+        #{barrierFlag,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="supportOrder != null" >
+        #{supportOrder,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proxyOperatorId != null" >
+        #{proxyOperatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="artificialState != null" >
+        #{artificialState,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="capabilityTag != null" >
+        #{capabilityTag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.dbEntity.member.basicentity.LxCecStationInfoExample" resultType="java.lang.Integer" >
+    select count(*) from lx_cec_station_info1
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lx_cec_station_info1
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.operatorId != null" >
+        operator_id = #{record.operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationId != null" >
+        station_id = #{record.stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.equipmentOwnerId != null" >
+        equipment_owner_id = #{record.equipmentOwnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationName != null" >
+        station_name = #{record.stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationCustomName != null" >
+        station_custom_name = #{record.stationCustomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryCode != null" >
+        country_code = #{record.countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null" >
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationTel != null" >
+        station_tel = #{record.stationTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceTel != null" >
+        service_tel = #{record.serviceTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stationType != null" >
+        station_type = #{record.stationType,jdbcType=INTEGER},
+      </if>
+      <if test="record.stationCustomType != null" >
+        station_custom_type = #{record.stationCustomType,jdbcType=INTEGER},
+      </if>
+      <if test="record.stationStatus != null" >
+        station_status = #{record.stationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.parkNums != null" >
+        park_nums = #{record.parkNums,jdbcType=INTEGER},
+      </if>
+      <if test="record.stationLng != null" >
+        station_lng = #{record.stationLng,jdbcType=DECIMAL},
+      </if>
+      <if test="record.stationLat != null" >
+        station_lat = #{record.stationLat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.siteGuide != null" >
+        site_guide = #{record.siteGuide,jdbcType=VARCHAR},
+      </if>
+      <if test="record.construction != null" >
+        construction = #{record.construction,jdbcType=INTEGER},
+      </if>
+      <if test="record.matchCars != null" >
+        match_cars = #{record.matchCars,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkInfo != null" >
+        park_info = #{record.parkInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessHours != null" >
+        business_hours = #{record.businessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electricityFee != null" >
+        electricity_fee = #{record.electricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceFee != null" >
+        service_fee = #{record.serviceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalElectricityFee != null" >
+        original_electricity_fee = #{record.originalElectricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalServiceFee != null" >
+        original_service_fee = #{record.originalServiceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessElectricityFee != null" >
+        business_electricity_fee = #{record.businessElectricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessServiceFee != null" >
+        business_service_fee = #{record.businessServiceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parkFee != null" >
+        park_fee = #{record.parkFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessHoursFormat != null" >
+        business_hours_format = #{record.businessHoursFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessHours724 != null" >
+        business_hours_724 = #{record.businessHours724,jdbcType=INTEGER},
+      </if>
+      <if test="record.electricityTax != null" >
+        electricity_tax = #{record.electricityTax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceTax != null" >
+        service_tax = #{record.serviceTax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.parkFeeFree != null" >
+        park_Fee_free = #{record.parkFeeFree,jdbcType=INTEGER},
+      </if>
+      <if test="record.parkingDiscountType != null" >
+        parking_discount_type = #{record.parkingDiscountType,jdbcType=INTEGER},
+      </if>
+      <if test="record.parkFeeStatus != null" >
+        park_fee_status = #{record.parkFeeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.printerFlag != null" >
+        printer_flag = #{record.printerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.barrierFlag != null" >
+        barrier_flag = #{record.barrierFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supportOrder != null" >
+        support_order = #{record.supportOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.proxyOperatorId != null" >
+        proxy_operator_id = #{record.proxyOperatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.artificialState != null" >
+        artificial_state = #{record.artificialState,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.capabilityTag != null" >
+        capability_tag = #{record.capabilityTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lx_cec_station_info1
+    set id = #{record.id,jdbcType=BIGINT},
+      operator_id = #{record.operatorId,jdbcType=VARCHAR},
+      station_id = #{record.stationId,jdbcType=VARCHAR},
+      equipment_owner_id = #{record.equipmentOwnerId,jdbcType=VARCHAR},
+      station_name = #{record.stationName,jdbcType=VARCHAR},
+      station_custom_name = #{record.stationCustomName,jdbcType=VARCHAR},
+      country_code = #{record.countryCode,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      station_tel = #{record.stationTel,jdbcType=VARCHAR},
+      service_tel = #{record.serviceTel,jdbcType=VARCHAR},
+      station_type = #{record.stationType,jdbcType=INTEGER},
+      station_custom_type = #{record.stationCustomType,jdbcType=INTEGER},
+      station_status = #{record.stationStatus,jdbcType=INTEGER},
+      park_nums = #{record.parkNums,jdbcType=INTEGER},
+      station_lng = #{record.stationLng,jdbcType=DECIMAL},
+      station_lat = #{record.stationLat,jdbcType=DECIMAL},
+      site_guide = #{record.siteGuide,jdbcType=VARCHAR},
+      construction = #{record.construction,jdbcType=INTEGER},
+      match_cars = #{record.matchCars,jdbcType=VARCHAR},
+      park_info = #{record.parkInfo,jdbcType=VARCHAR},
+      business_hours = #{record.businessHours,jdbcType=VARCHAR},
+      electricity_fee = #{record.electricityFee,jdbcType=VARCHAR},
+      service_fee = #{record.serviceFee,jdbcType=VARCHAR},
+      original_electricity_fee = #{record.originalElectricityFee,jdbcType=VARCHAR},
+      original_service_fee = #{record.originalServiceFee,jdbcType=VARCHAR},
+      business_electricity_fee = #{record.businessElectricityFee,jdbcType=VARCHAR},
+      business_service_fee = #{record.businessServiceFee,jdbcType=VARCHAR},
+      park_fee = #{record.parkFee,jdbcType=VARCHAR},
+      business_hours_format = #{record.businessHoursFormat,jdbcType=VARCHAR},
+      business_hours_724 = #{record.businessHours724,jdbcType=INTEGER},
+      electricity_tax = #{record.electricityTax,jdbcType=DECIMAL},
+      service_tax = #{record.serviceTax,jdbcType=DECIMAL},
+      park_Fee_free = #{record.parkFeeFree,jdbcType=INTEGER},
+      parking_discount_type = #{record.parkingDiscountType,jdbcType=INTEGER},
+      park_fee_status = #{record.parkFeeStatus,jdbcType=INTEGER},
+      printer_flag = #{record.printerFlag,jdbcType=INTEGER},
+      barrier_flag = #{record.barrierFlag,jdbcType=INTEGER},
+      payment = #{record.payment,jdbcType=VARCHAR},
+      support_order = #{record.supportOrder,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      proxy_operator_id = #{record.proxyOperatorId,jdbcType=VARCHAR},
+      artificial_state = #{record.artificialState,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      capability_tag = #{record.capabilityTag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dbEntity.member.basicentity.LxCecStationInfo" >
+    update lx_cec_station_info1
+    <set >
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentOwnerId != null" >
+        equipment_owner_id = #{equipmentOwnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationCustomName != null" >
+        station_custom_name = #{stationCustomName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryCode != null" >
+        country_code = #{countryCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="stationTel != null" >
+        station_tel = #{stationTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceTel != null" >
+        service_tel = #{serviceTel,jdbcType=VARCHAR},
+      </if>
+      <if test="stationType != null" >
+        station_type = #{stationType,jdbcType=INTEGER},
+      </if>
+      <if test="stationCustomType != null" >
+        station_custom_type = #{stationCustomType,jdbcType=INTEGER},
+      </if>
+      <if test="stationStatus != null" >
+        station_status = #{stationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="parkNums != null" >
+        park_nums = #{parkNums,jdbcType=INTEGER},
+      </if>
+      <if test="stationLng != null" >
+        station_lng = #{stationLng,jdbcType=DECIMAL},
+      </if>
+      <if test="stationLat != null" >
+        station_lat = #{stationLat,jdbcType=DECIMAL},
+      </if>
+      <if test="siteGuide != null" >
+        site_guide = #{siteGuide,jdbcType=VARCHAR},
+      </if>
+      <if test="construction != null" >
+        construction = #{construction,jdbcType=INTEGER},
+      </if>
+      <if test="matchCars != null" >
+        match_cars = #{matchCars,jdbcType=VARCHAR},
+      </if>
+      <if test="parkInfo != null" >
+        park_info = #{parkInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessHours != null" >
+        business_hours = #{businessHours,jdbcType=VARCHAR},
+      </if>
+      <if test="electricityFee != null" >
+        electricity_fee = #{electricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFee != null" >
+        service_fee = #{serviceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="originalElectricityFee != null" >
+        original_electricity_fee = #{originalElectricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="originalServiceFee != null" >
+        original_service_fee = #{originalServiceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="businessElectricityFee != null" >
+        business_electricity_fee = #{businessElectricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="businessServiceFee != null" >
+        business_service_fee = #{businessServiceFee,jdbcType=VARCHAR},
+      </if>
+      <if test="parkFee != null" >
+        park_fee = #{parkFee,jdbcType=VARCHAR},
+      </if>
+      <if test="businessHoursFormat != null" >
+        business_hours_format = #{businessHoursFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="businessHours724 != null" >
+        business_hours_724 = #{businessHours724,jdbcType=INTEGER},
+      </if>
+      <if test="electricityTax != null" >
+        electricity_tax = #{electricityTax,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceTax != null" >
+        service_tax = #{serviceTax,jdbcType=DECIMAL},
+      </if>
+      <if test="parkFeeFree != null" >
+        park_Fee_free = #{parkFeeFree,jdbcType=INTEGER},
+      </if>
+      <if test="parkingDiscountType != null" >
+        parking_discount_type = #{parkingDiscountType,jdbcType=INTEGER},
+      </if>
+      <if test="parkFeeStatus != null" >
+        park_fee_status = #{parkFeeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="printerFlag != null" >
+        printer_flag = #{printerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="barrierFlag != null" >
+        barrier_flag = #{barrierFlag,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="supportOrder != null" >
+        support_order = #{supportOrder,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proxyOperatorId != null" >
+        proxy_operator_id = #{proxyOperatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="artificialState != null" >
+        artificial_state = #{artificialState,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="capabilityTag != null" >
+        capability_tag = #{capabilityTag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

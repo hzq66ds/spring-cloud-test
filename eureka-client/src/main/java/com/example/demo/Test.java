@@ -80,16 +80,17 @@ public class Test {
 //            semaphore.release();
 //        }
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 1, 1, TimeUnit.DAYS,
-                new ArrayBlockingQueue<>(2),
-                new MyThreadFactory("test"),
-//                new ThreadPoolExecutor.CallerRunsPolicy()
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 5, 1L, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(3),
+                new MyThreadFactory("INITTHREAD"),
+                //饱和策略，使用ThreadPoolExecutor.DiscardOldestPolicy等等，或者实现自定义饱和策略
+//                new ThreadPoolExecutor.DiscardOldestPolicy()
                 new RejectedExecutionHandler() {
                     @Override
                     public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
                         System.out.println(Thread.currentThread().getName()+"_________饱和策略执行"+"_________"+r);
                         try {
-                            Thread.sleep(5000);
+                            Thread.sleep(10000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -97,16 +98,19 @@ public class Test {
                     }
                 }
         );
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i <= 30; i++) {
             final int ii = i;
+            System.out.printf("线程启动%d\n",i);
             threadPoolExecutor.submit(()->{
-                System.out.println(Thread.currentThread().getName()+"线程"+ii);
+                System.out.println(Thread.currentThread().getName()+"线程"+ii+"start");
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                System.out.println(Thread.currentThread().getName()+"线程"+ii+"end");
             });
+
         }
         threadPoolExecutor.shutdown();
     }
@@ -130,7 +134,7 @@ public class Test {
         threadName.parallelStream().forEach(name->{
             while (down.getAndAdd(1)<40){
                 try {
-                    System.out.println(Thread.currentThread().getName()+"_______"+name+"_______"+ DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
+                    System.out.println(Thread.currentThread().getName()+"_______"+name+"_______"+down.get()+"_______"+ DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
                     Thread.sleep(1000);
                 }catch (Exception e){}
             }
@@ -154,7 +158,7 @@ class MyThreadFactory implements ThreadFactory{
 
     @Override
     public Thread newThread(Runnable r) {
-        System.out.println("线程"+r.toString());
+        System.out.println("线程初始化"+r.toString());
         return new Thread( r, name);
     }
 }

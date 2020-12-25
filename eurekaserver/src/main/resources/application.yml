@@ -16,7 +16,7 @@ eureka:
     hostname: monitor-eurekas8762
   client:
     service-url:
-      defaultZone: http://monitor-eurekas8763:8763/eureka/
+      defaultZone: http://127.0.0.1:8763/eureka/
 
 ---
 server:
@@ -28,4 +28,4 @@ eureka:
     hostname: monitor-eurekas8763
   client:
     service-url:
-      defaultZone: http://monitor-eurekas8762:8762/eureka/
+      defaultZone: http://127.0.0.1:8762/eureka/
