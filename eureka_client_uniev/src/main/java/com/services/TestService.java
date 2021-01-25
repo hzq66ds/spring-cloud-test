@@ -32,13 +32,14 @@ public class TestService {
     private LxCecConnectorInfoMapper lxCecConnectorInfoMapper;
     private String preName = "app_sn_p_";
     String op="MA002TMQX";
+
     public String getCode(){
         int a=0;
         int b=0;
         int c=0;
         String name = "";
         try {
-            InputStream is = new FileInputStream("I:\\a.xls");
+            InputStream is = new FileInputStream("/Users/hanzhiqiang/Desktop/a.xls");
             Workbook wb = Workbook.getWorkbook(is);
             c = wb.getSheets().length;
             for (int i = 0; i < wb.getSheets().length; i++) {
@@ -51,7 +52,22 @@ public class TestService {
                 for (int i1 = 0; i1 < headCell.length; i1++) {
                     headMap.put(headCell[i1].getContents().trim(),i1);
                 }
+
                 Map<String,LxCecStationInfo> stationInfos = new HashMap<>();
+                LxCecStationInfo lxCecStationInfo = new LxCecStationInfo();
+                initStation(i,lxCecStationInfo,headMap,sheet.getRow(1));
+                lxCecStationInfo.setCountryCode("CN");
+                lxCecStationInfo.setStationType(50);
+                lxCecStationInfo.setStationStatus(0);
+                lxCecStationInfo.setParkNums(1);
+                lxCecStationInfo.setUpdateTime(new Date());
+                lxCecStationInfo.setCreateTime(new Date());
+                lxCecStationInfo.setArtificialState(-1);
+                lxCecStationInfo.setState(1);
+                String stationId =lxCecStationInfo.getStationId();
+
+
+
                 List<LxCecEquipmentInfo> equipmentInfos = new ArrayList<>();
                 List<LxCecConnectorInfo> connectorInfos = new ArrayList<>();
                 for (int j = 1; j < rowNum; j++){
@@ -61,27 +77,14 @@ public class TestService {
                             a++;
                         }else{
                             b++;
-                            //正式数据处理
-                            LxCecStationInfo lxCecStationInfo = new LxCecStationInfo();
-                            lxCecStationInfo.setStationId(sheet.getRow(j)[headMap.get("户号")].getContents());
-                            if (stationInfos.keySet().contains(lxCecStationInfo.getStationId())){
-                                lxCecStationInfo = stationInfos.get(lxCecStationInfo.getStationId());
-                            }else{
-                                lxCecStationInfo.setCountryCode("CN");
-                                lxCecStationInfo.setStationType(50);
-                                lxCecStationInfo.setStationStatus(0);
-                                lxCecStationInfo.setParkNums(1);
-                            }
-                            initStation(lxCecStationInfo,headMap,sheet.getRow(j));
+
                             LxCecEquipmentInfo lxCecEquipmentInfo = new LxCecEquipmentInfo();
+                            lxCecEquipmentInfo.setStationId(stationId);
                             initEquipment(lxCecEquipmentInfo,headMap,sheet.getRow(j));
                             LxCecConnectorInfo lxCecConnectorInfo = new LxCecConnectorInfo();
+                            lxCecConnectorInfo.setStationId(stationId);
+                            lxCecConnectorInfo.setEquipmentId(lxCecEquipmentInfo.getEquipmentId());
                             initConnector(lxCecConnectorInfo,headMap,sheet.getRow(j));
-
-                            lxCecStationInfo.setUpdateTime(new Date());
-                            lxCecStationInfo.setCreateTime(new Date());
-                            lxCecStationInfo.setArtificialState(-1);
-                            lxCecStationInfo.setState(1);
 
                             lxCecEquipmentInfo.setUpdateTime(new Date());
                             lxCecEquipmentInfo.setCreateTime(new Date());
@@ -96,17 +99,17 @@ public class TestService {
 
                             equipmentInfos.add(lxCecEquipmentInfo);
                             connectorInfos.add(lxCecConnectorInfo);
-                            stationInfos.put(lxCecStationInfo.getStationId(),lxCecStationInfo);
                         }
                         System.out.println(sheet.getName()+"\t"+i+"\t"+j);
                     }
                 }
+                stationInfos.put(lxCecStationInfo.getStationId(),lxCecStationInfo);
                 if (stationInfos.size()>0){
                     int ii = 0;
                     for (LxCecStationInfo stationInfo:stationInfos.values()){
                         lxCecStationInfoMapper.insertSelective(stationInfo);
                         ii++;
-                        System.out.printf("保存中 %s   %s\n",stationInfos.size()+"",ii+"");
+                        System.out.printf("station保存中 %s   %s\n",stationInfos.size()+"",ii+"");
                     }
                 }
                 if (equipmentInfos.size()>0){
@@ -114,7 +117,7 @@ public class TestService {
                     for (LxCecEquipmentInfo equipmentInfo:equipmentInfos){
                         lxCecEquipmentInfoMapper.insertSelective(equipmentInfo);
                         ii++;
-                        System.out.printf("保存中 %s   %s\n",stationInfos.size()+"",ii+"");
+                        System.out.printf("equipment保存中 %s   %s\n",stationInfos.size()+"",ii+"");
                     }
                 }
                 if (connectorInfos.size()>0){
@@ -122,7 +125,7 @@ public class TestService {
                     for (LxCecConnectorInfo connectorInfo:connectorInfos){
                         lxCecConnectorInfoMapper.insertSelective(connectorInfo);
                         ii++;
-                        System.out.printf("保存中 %s   %s\n",stationInfos.size()+"",ii+"");
+                        System.out.printf("connector保存中 %s   %s\n",stationInfos.size()+"",ii+"");
                     }
                 }
             }
@@ -136,32 +139,27 @@ public class TestService {
         return "success";
     }
 
-    private void initStation(LxCecStationInfo lxCecStationInfo,Map<String,Integer> headMap,Cell[] cells){
+    private void initStation(int sheetIndex,LxCecStationInfo lxCecStationInfo,Map<String,Integer> headMap,Cell[] cells){
         lxCecStationInfo.setConstruction(255);
         headMap.entrySet().forEach(v->{
             String text = "";
-            System.out.println("aaa;   "+cells.length+"\t"+v.getValue());
             if(cells.length>v.getValue()){
                 if (cells[v.getValue()]!=null) {
                     text = cells[v.getValue()].getContents().trim();
                 }
                 if (StringUtils.isNotBlank(text)){
-                    if (v.getKey().equals("户号")){
-                        lxCecStationInfo.setStationId(text);
+                    if (v.getKey().equals("区域（行政区域编码）")){
+                        lxCecStationInfo.setStationId(preName+text+"_"+sheetIndex);
+                        lxCecStationInfo.setAreaCode(text);
                     }
                     if (v.getKey().equals("站名称")){
                         lxCecStationInfo.setStationName(text);
-                    }
-                    if (v.getKey().equals("户名")){
                         lxCecStationInfo.setStationCustomName(text);
                     }
                     if (v.getKey().equals("运营商")){
                         lxCecStationInfo.setOperatorId(op);
                         lxCecStationInfo.setProxyOperatorId(op);
                         lxCecStationInfo.setEquipmentOwnerId(op);
-                    }
-                    if (v.getKey().equals("区域（行政区域编码）")){
-                        lxCecStationInfo.setAreaCode(text);
                     }
                     if (v.getKey().equals("地址")){
                         lxCecStationInfo.setAddress(text);
@@ -188,16 +186,11 @@ public class TestService {
     }
     private void initEquipment(LxCecEquipmentInfo lxCecEquipmentInfo,Map<String,Integer> headMap,Cell[] cells){
         lxCecEquipmentInfo.setEquipmentType(1);
+        lxCecEquipmentInfo.setEquipmentId(preName+cells[headMap.get("户号")].getContents()+"_"+cells[0].getContents());
         headMap.entrySet().forEach(v->{
             if(cells.length>v.getValue()){
-                String text = cells[v.getValue()].getContents();
+                String text = cells[v.getValue()].getContents().trim();
                 if (StringUtils.isNotBlank(text)){
-                    if (v.getKey().equals("户号")){
-                        lxCecEquipmentInfo.setStationId(text);
-                    }
-                    if (v.getValue().equals(0)){
-                        lxCecEquipmentInfo.setEquipmentId(preName+text);
-                    }
                     if (v.getKey().equals("运营商")){
                         lxCecEquipmentInfo.setOperatorId(op);
                         lxCecEquipmentInfo.setProxyOperatorId(op);
@@ -231,19 +224,13 @@ public class TestService {
         lxCecConnectorInfo.setNationalStandard(2);
         lxCecConnectorInfo.setAuxPower(-1);
         lxCecConnectorInfo.setStartType(1);
-
+        lxCecConnectorInfo.setConnectorType(6);
+        lxCecConnectorInfo.setConnectorId(preName+cells[headMap.get("户号")].getContents()+"_"+cells[0].getContents());
+        lxCecConnectorInfo.setParkNo("1");
         headMap.entrySet().forEach(v->{
             if(cells.length>v.getValue()){
-                String text = cells[v.getValue()].getContents();
+                String text = cells[v.getValue()].getContents().trim();
                 if (StringUtils.isNotBlank(text)){
-                    if (v.getKey().equals("户号")){
-                        lxCecConnectorInfo.setStationId(text);
-                    }
-                    if (v.getValue().equals(0)){
-                        lxCecConnectorInfo.setEquipmentId(preName+text);
-                        lxCecConnectorInfo.setConnectorId(preName+text);
-                        lxCecConnectorInfo.setParkNo("1");
-                    }
                     if (v.getKey().equals("站名称")){
                         lxCecConnectorInfo.setConnectorName(text);
                     }
@@ -283,5 +270,31 @@ public class TestService {
                 }
             }
         });
+    }
+
+    public String getCode1(){
+
+        try {
+            InputStream is = new FileInputStream("/Users/hanzhiqiang/Desktop/a.xls");
+            Workbook wb = Workbook.getWorkbook(is);
+            for (int i = 0; i < wb.getSheets().length; i++) {
+                Sheet sheet = wb.getSheet(i);
+
+                int rowNum=sheet.getRows();
+                int columnsNum=sheet.getColumns();
+                Map<String,Integer> headMap = new HashMap<>();
+                Cell[] headCell = sheet.getRow(0);
+                for (int i1 = 0; i1 < headCell.length; i1++) {
+                    headMap.put(headCell[i1].getContents().trim(),i1);
+                }
+
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "success";
     }
 }

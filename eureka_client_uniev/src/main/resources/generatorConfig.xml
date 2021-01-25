@@ -17,7 +17,7 @@
 		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<!--connectionURL="jdbc:mysql://rds89uew2533517ity3crw.mysql.rds.aliyuncs.com:3306/task?zeroDateTimeBehavior=convertToNull"-->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.124.5:30001/test?autoReconnect=true&amp;failOverReadOnly=false"
+			connectionURL="jdbc:mysql://127.0.0.1:30001/test?autoReconnect=true&amp;failOverReadOnly=false"
 						userId="root" password="123456">
 		</jdbcConnection>
 
@@ -41,9 +41,10 @@
 		</javaClientGenerator>
 
 <!--		<table tableName="lx_area_code" domainObjectName="LxAreaCode"    />-->
-		<table tableName="lx_cec_station_info1" domainObjectName="LxCecStationInfo"    />
-		<table tableName="lx_cec_equipment_info1" domainObjectName="LxCecEquipmentInfo"    />
-		<table tableName="lx_cec_connector_info1" domainObjectName="LxCecConnectorInfo"    />
+<!--		<table tableName="lx_cec_station_info1" domainObjectName="LxCecStationInfo"    />-->
+<!--		<table tableName="lx_cec_equipment_info1" domainObjectName="LxCecEquipmentInfo"    />-->
+<!--		<table tableName="lx_cec_connector_info1" domainObjectName="LxCecConnectorInfo"    />-->
 <!--		<table tableName="lx_gov_base_dictionary" domainObjectName="LxGovBaseDictionary"    />-->
+		<table tableName="lx_gov_operator_info" domainObjectName="lx_gov_operator_info"    />
 	</context>
 </generatorConfiguration>

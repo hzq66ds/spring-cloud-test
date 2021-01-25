@@ -23,5 +23,14 @@ public class TestController {
     public ReturnMsg test() {
         return new ReturnMsg("200","success repauseAll",testService.getCode());
     }
-
+    /**
+     * 恢复所有
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/test1",method=RequestMethod.GET)
+    @ResponseBody
+    public ReturnMsg test1() {
+        return new ReturnMsg("200","success repauseAll",testService.getCode1());
+    }
 }
